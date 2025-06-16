@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-container {
+    width: 100%;
+}
+
+.form-toggle {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.form-toggle button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: #eee;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-toggle button.active {
+    background: #007bff;
+    color: white;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form.hidden {
+    display: none;
+}
+
+.form h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form button {
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.form button:hover {
+    /*box-shadow: 0px 15px 20px rgba(147, 161, 231, 0.4);
+    transform: translateY(-7px);*/ 
+    /*aufploppen der Buttons*/
+    background: #0056b3;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .hidden{
+    display: none;
+  }

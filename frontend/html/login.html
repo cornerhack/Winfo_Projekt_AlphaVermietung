@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/login.css">
+    <title>Anmeldung</title>
+</head>
+<body>
+    <!--Header-->
+    <header>
+        <nav>
+            <ul>
+                <b>
+                    <li><a href="../index.php">Home</a></li>
+                    <li><a href="../reserve/reservation.php">Reservieren</a></li>
+                    <li><a href="../invoice/invoice_list.php">Rechnungen</a></li>
+                    <li><a href="../login/register.php">Registrieren</a></li>
+                </b>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1> Möchten Sie ein Auto reservieren?<br> Melden Sie sich an!</h1>
+        <center>
+            <div id="error-message" class="form_font_error"></div>
+
+            <div class="frame">
+                <form id="login-form">
+                    <label for="bedingung" id="checkbox">
+                        <input type="checkbox" name="bedingung" id="bedingung"><b>Mitarbeiter</b>
+                    </label>
+                    <br>
+                    <label for="pseudo">*Username</label>
+                    <div id="username-frame" class="form_frame">
+                        <input type="text" name="pseudo" id="pseudo" placeholder="Username" required>
+                    </div>
+                    <label for="password">*Passwort</label>
+                    <input type="password" name="password" id="password" placeholder="Passwort" required>
+
+                    <div><a href="forgot_password.php">Passwort vergessen?</a></div>
+
+                    <div id="wait-message" class="form_font_error"></div>
+                    <button type="submit" id="login-button">Anmelden</button>
+
+                    <div><a href="register.php">Neues Konto erstellen</a></div>
+                </form>
+            </div>
+        </center>
+    </main>
+    <script src="login.js"></script>
+</body>
+</html>

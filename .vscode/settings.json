@@ -1,0 +1,19 @@
+{
+    "terminal.integrated.sendKeybindingsToShell": true,
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "database": "Autoverleih",
+            "username": "root",
+            "password": "unipasswort",
+            "name": "ProjektWinfo2025"
+        }
+    ]
+}
