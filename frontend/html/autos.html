@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Verfügbare Autos</title>
+  <link rel="stylesheet" href="../css/autos.css">
+</head>
+<body>
+  <form id="suchleiste">
+        <div class="input-group">
+            <label for="pickup">Abholort</label>
+            <input type="text" id="pickup" autocomplete="off" placeholder="Ort eingeben..." required>
+            <div id="pickup-list" class="autocomplete-list"></div>
+        </div>
+
+        <div class="input-group">
+            <label for="dropoff">Abgabeort</label>
+            <input type="text" id="dropoff" autocomplete="off" placeholder="Ort eingeben..." required>
+            <div id="dropoff-list" class="autocomplete-list"></div>
+        </div>
+
+      <div class="form-group">
+        <label for="pickup-date">Abholdatum</label>
+        <input type="date" id="pickup-date" required>
+      </div>
+
+      <div class="form-group">
+        <label for="return-date">Abgabedatum</label>
+        <input type="date" id="return-date" required>
+      </div>
+
+      <button type="submit" id="submit" class="submit-btn">Autos anzeigen</button>
+    </form>
+  <h1>Welches Auto möchten Sie fahren?</h1>
+
+  <div id="filter-container">
+    <!-- Sortieren nach (Einzelauswahl) -->
+    <div class="dropdown-multi" data-filter="sortierung" data-multi="false">
+      <button class="dropdown-toggle">Sortieren nach <span class="count">(0)</span></button>
+      <div class="dropdown-options">
+        <div data-value="preis-auf">💰 Niedrigster Preis</div>
+        <div data-value="preis-ab">💸 Höchster Preis</div>
+      </div>
+    </div>
+
+    <!-- Fahrzeugkategorie (Mehrfachauswahl) -->
+    <div class="dropdown-multi" data-filter="kategorie" data-multi="true">
+      <button class="dropdown-toggle">Fahrzeugkategorie <span class="count">(0)</span></button>
+      <div class="dropdown-options">
+        <div data-value="Kleinwagen">🚗 Kleinwagen</div>
+        <div data-value="Kombi">🚙 Kombi</div>
+        <div data-value="Van">🚐 Van</div>
+        <div data-value="Bus">🚌 Bus</div>
+        <div data-value="SUV">🚙 SUV</div>
+        <div data-value="Pickup">🛻 Pickup</div>
+        <div data-value="Cabrio">🚘 Cabrio</div>
+        <div data-value="Roadster">🏎️ Roadster</div>
+        <div data-value="Limousine">🚗 Limousine</div>
+        <div data-value="Wohnmobil">🚐 Wohnmobil</div>
+        <div data-value="Sportwagen">🏁 Sportwagen</div>
+      </div>
+    </div>
+
+    <!-- Getriebe (Mehrfachauswahl) -->
+    <div class="dropdown-multi" data-filter="getriebe" data-multi="true">
+      <button class="dropdown-toggle">Getriebe <span class="count">(0)</span></button>
+      <div class="dropdown-options">
+        <div data-value="manuell">🔧 Manuell</div>
+        <div data-value="automatik">⚙️ Automatik</div>
+      </div>
+    </div>
+
+    <!-- Sitzplätze (Einzelauswahl) -->
+    <div class="dropdown-multi" data-filter="sitze" data-multi="false">
+      <button class="dropdown-toggle">Sitze <span class="count">(0)</span></button>
+      <div class="dropdown-options">
+        <div data-value="2">2+</div>
+        <div data-value="4">4+</div>
+        <div data-value="5">5+</div>
+        <div data-value="7">7+</div>
+      </div>
+    </div>
+  </div>
+  <div id="auto-liste" class="car-grid">Lade Fahrzeuge...</div>
+
+  <script src="../js/autos.js"></script>
+  <script src="../js/startseite.js"></script>
+</body>
+</html>

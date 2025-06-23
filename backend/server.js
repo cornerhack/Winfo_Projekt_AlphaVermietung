@@ -13,10 +13,11 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('../frontend'));
+app.use(express.static(join(__dirname, '../frontend')));
+app.use('/html', express.static(join(__dirname, '../frontend/html')));
 
 app.get('/', (req, res) => {
-  res.sendFile(join(__dirname + '/../frontend/html/anmeldung.html'));
+  res.sendFile(join(__dirname, '../frontend/html/startseite.html'));
 });
 
 async function registerRoutes(dir) {

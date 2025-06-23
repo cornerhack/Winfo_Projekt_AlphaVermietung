@@ -1,0 +1,229 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f6f8;
+  margin: 0;
+  padding: 2rem;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.car-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.car-card {
+  background: linear-gradient(135deg, #2d2f37, #1f2028);
+  color: white;
+  border-radius: 12px;
+  padding: 20px;
+  padding-right: 40px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.car-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+}
+
+.car-card .header {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.car-card .subtitle {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.car-card .info-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.car-card .info-badge {
+  background: #444754;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.car-card .image {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #1a1a1a;
+  padding: 10px;
+}
+
+.car-card .price {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.car-card .price span {
+  font-weight: normal;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+#suchleiste {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+}
+
+.input-group,
+.form-group {
+  display: flex;
+  padding-right: 25px;
+  flex-direction: column;
+  min-width: 150px;
+  flex: 1;
+}
+
+.input-group input,
+.form-group input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 100%;
+  white-space: nowrap;
+  overflow-x: auto;
+  text-overflow: ellipsis;
+}
+
+.input-group input:focus,
+.form-group input:focus {
+  text-overflow: unset;
+}
+
+.autocomplete-list {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.autocomplete-list div {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.autocomplete-list div:hover {
+  background-color: #f0f0f0;
+}
+
+.submit-btn {
+  padding: 10px 20px;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  height: 42px;
+  align-self: flex-end;
+}
+
+.submit-btn:hover {
+  background-color: #ff6600;
+}
+
+.filterleiste {
+  display: flex;
+  gap: 1rem;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.filterleiste select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  min-width: 160px;
+}
+
+#filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.dropdown-multi {
+  position: relative;
+}
+
+.dropdown-toggle {
+  padding: 10px 15px;
+  background: rgb(17, 17, 17);
+  color: white;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.dropdown-toggle .count {
+  margin-left: 5px;
+}
+
+.dropdown-options {
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgb(17, 17, 17);
+  z-index: 10;
+  width: 220px;
+  padding: 10px;
+}
+
+.dropdown-multi.open .dropdown-options {
+  display: block;
+}
+
+.dropdown-options div {
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f2f2f2;
+}
+
+.dropdown-options div.selected {
+  background: rgb(17, 17, 17);
+  color: white;
+}
+
+
