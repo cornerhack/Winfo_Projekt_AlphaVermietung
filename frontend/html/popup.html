@@ -1,0 +1,42 @@
+<div class="popup-overlay" id="popup">
+        <div class="popup-content">
+            <button class="popup-close" id="close-popup">&times;</button>
+
+            <div class="form-container">
+                <div class="form-toggle">
+                    <button id="login-toggle" class="active">Anmelden</button>
+                    <button id="register-toggle">Registrieren</button>
+                </div>
+
+                <form id="login-form" class="form" autocomplete="off">
+                    <h2>Anmelden</h2>
+                    <input type="email" id ="emailL" placeholder="Email" pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,63}"
+                    title="Bitte eine gültige E-Mail eingeben (z.B. nutzer@example.de)" required>
+                    <input type="password" placeholder="Passwort" required>
+                    <button type="submit">Anmelden</button>
+                </form>
+                <form id="register-form" class="form hidden" autocomplete="off">
+                    <h2>Registrieren</h2>
+                    <label>
+                        <input type="checkbox" id="isCompany"> Unternehmen?
+                    </label>
+                    <div id="companyNameContainer" class="hidden">
+                        <input type="text" id="companyName" placeholder="Name des Unternehmens">
+                    </div>
+                    <input type="text" id = "usernameR" placeholder="Name" required>
+                    <input type="email" id = "emailR" placeholder="Email" pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,63}"
+                    title="Bitte eine gültige E-Mail eingeben (z.B. nutzer@example.de)" required>
+                    <input type="password" placeholder="Passwort" id="firstPassword"
+                    pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}"
+                    title="Mindestens 8 Zeichen, Groß-/Kleinbuchstaben, Zahl & Sonderzeichen"
+                    required>
+                    <input type="password" placeholder="Passwort bestätigen" id="secondPassword"
+                    pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}"
+                    title="Mindestens 8 Zeichen, Groß-/Kleinbuchstaben, Zahl & Sonderzeichen"
+                    required>
+                    <div class="error-message" id="password-error"></div>
+                    <button type="submit">Registrieren</button>
+                </form>
+            </div>
+        </div>
+    </div>

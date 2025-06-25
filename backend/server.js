@@ -3,6 +3,7 @@ import { dirname, join, extname } from 'path';
 import fs from 'fs/promises';
 import { fileURLToPath, pathToFileURL } from 'url';
 import cors from 'cors';
+import session from 'express-session';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -14,6 +15,15 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(join(__dirname, '../frontend')));
+app.use(session({
+  secret: 'geheimes_passwort', // Ändern für Produktion!
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false,
+    maxAge: 1000 * 60 * 60 * 24 // 1 Tag
+  }
+}));
 app.use('/html', express.static(join(__dirname, '../frontend/html')));
 
 app.get('/', (req, res) => {

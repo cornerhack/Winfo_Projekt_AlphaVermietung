@@ -1,0 +1,68 @@
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservierung</title>
+  <link rel="stylesheet" href="../css/car-card.css">
+  <link rel="stylesheet" href="../css/reservierung.css">
+  <link rel="stylesheet" href="../css/universal.css">
+  <link rel="stylesheet" href="../css/popup.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div id="popup-placeholder"></div>
+  <div class="reservierungs-container">
+    <div class="left">
+      <h2>Fahrzeugdetails</h2>
+      <div id="fahrzeug-card" class="car-card"></div>
+    </div>
+
+    <div class="right">
+      <h2>Zusatzoptionen</h2>
+      <div class="zusatz-option">
+        <div class="option-header">
+          <label for="fahrer">Zusatzfahrer (5€/Tag)</label>
+          <input type="checkbox" id="fahrer" data-preis="5" data-art="proTag">
+        </div>
+        <p class="beschreibung">Ermöglicht einer weiteren Person das Fahren des Fahrzeugs – ideal für längere Reisen.</p>
+      </div>
+      <div class="zusatz-option">
+        <div class="option-header">
+          <label for="kindersitz">Kindersitz (3€/Tag)</label>
+          <input type="checkbox" id="kindersitz" data-preis="3" data-art="proTag">
+        </div>
+        <p class="beschreibung">Sicherer Kindersitz für Kinder bis 12 Jahre oder 1,50 m Körpergröße.</p>
+      </div>
+      <div class="zusatz-option">
+        <div class="option-header">
+          <label for="navi">Navigationssystem (7€/Tag)</label>
+          <input type="checkbox" id="navi" data-preis="7" data-art="proTag">
+        </div>
+        <p class="beschreibung">Integriertes Navigationssystem mit aktuellen Karten und Verkehrsinformationen.</p>
+      </div>
+      <div class="zusatz-option">
+        <div class="option-header">
+          <label for="versicherung">Vollkaskoversicherung (15€/Tag)</label>
+          <input type="checkbox" id="versicherung" data-preis="15" data-art="proTag">
+        </div>
+        <p class="beschreibung">Schutz vor hohen Kosten bei Unfällen oder Schäden am Fahrzeug.</p>
+      </div>
+      <div class="zusatz-option">
+        <div class="option-header">
+          <label for="tankservice">Tankservice (einmalig 50€)</label>
+          <input type="checkbox" id="tankservice" data-preis="50" data-art="einmalig">
+        </div>
+        <p class="beschreibung">Sie können das Fahrzeug mit leerem Tank zurückgeben, ohne zusätzliche Kosten.</p>
+      </div>
+
+      <div class="gesamtpreis-box">
+        Gesamtpreis: <span id="gesamtpreis">0.00</span> €
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/header.js"></script>
+  <script src="../js/loadPopup.js" type="module"></script>
+  <script src="../js/reservierung.js"></script>
+</body>
+</html>

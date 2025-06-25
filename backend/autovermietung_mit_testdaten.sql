@@ -3202,7 +3202,7 @@ CREATE TABLE `kunden` (
   `telefonNr` varchar(45) DEFAULT NULL,
   `emailAdresse` varchar(45) DEFAULT NULL,
   `geschaeftlich` boolean DEFAULT false,
-  `sammelrechnung` enum('keine','woechentlich','monatlich','quartalsweise','halbjaehrlich','jaehrlich') CHARACTER SET utf8 COLLATE utf8_general_mysql500_ci DEFAULT 'keine'
+  `sammelrechnung` enum('keine','monatlich','quartalsweise','halbjaehrlich','jaehrlich') CHARACTER SET utf8 COLLATE utf8_general_mysql500_ci DEFAULT 'keine'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -3214,7 +3214,7 @@ INSERT INTO `kunden` (`kundeID`, `unternehmen`, `vorname`, `nachname`, `password
 (3, NULL, 'Thomas', 'Müller', 'thomas123', 'Schulweg', '5', 80331, 'München', 'Deutschland', '0893456789', 'thomas.mueller@email.de', false, 'keine'),
 (4, 'AutoPartner AG', 'Sabine', 'Meier', 'sabine!', 'Bahnhofstraße', '67', 50667, 'Köln', 'Deutschland', '02214567890', 'sabine.meier@autopartner.de', true, 'quartalsweise'),
 (5, NULL, 'Julia', 'Fischer', 'julia2024', 'Lindenallee', '89', 60313, 'Frankfurt', 'Deutschland', '0695678901', 'julia.fischer@email.de', false, 'keine'),
-(6, 'Logistik Express', 'Daniel', 'Weber', 'danielweber', 'Goethestraße', '23', 70173, 'Stuttgart', 'Deutschland', '0711789012', 'daniel.weber@logistik.de', true, 'woechentlich'),
+(6, 'Logistik Express', 'Daniel', 'Weber', 'danielweber', 'Goethestraße', '23', 70173, 'Stuttgart', 'Deutschland', '0711789012', 'daniel.weber@logistik.de', true, 'quartalweise'),
 (7, NULL, 'Laura', 'Becker', 'laura123', 'Parkstraße', '45', 40213, 'Düsseldorf', 'Deutschland', '0211890123', 'laura.becker@email.de', false, 'keine'),
 (8, 'BauProjekt GmbH', 'Markus', 'Hoffmann', 'markush', 'Friedrichstraße', '56', 04109, 'Leipzig', 'Deutschland', '0341901234', 'markus.hoffmann@bauprojekt.de', true, 'monatlich'),
 (9, NULL, 'Sarah', 'Schulz', 'sarahs', 'Kaiserstraße', '78', 55116, 'Mainz', 'Deutschland', '0613012345', 'sarah.schulz@email.de', false, 'keine'),

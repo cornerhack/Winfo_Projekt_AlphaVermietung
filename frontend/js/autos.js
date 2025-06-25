@@ -4,11 +4,18 @@ const filters = {
   getriebe: [],
   sitze: []
 };
+let params;
+let abgabeStationID;
+let abholStationID;
+let abholStation;
+let abgabeStation;
+
 
 document.querySelectorAll('.dropdown-multi').forEach(dropdown => {
   const toggleBtn = dropdown.querySelector('.dropdown-toggle');
   const optionsContainer = dropdown.querySelector('.dropdown-options');
   const countSpan = dropdown.querySelector('.count');
+  const nameSpan = dropdown.querySelector('.name');
   const filterKey = dropdown.dataset.filter;
   const multiSelect = dropdown.dataset.multi === 'true';
 
@@ -22,10 +29,8 @@ document.querySelectorAll('.dropdown-multi').forEach(dropdown => {
   optionsContainer.addEventListener('click', e => {
     const option = e.target.closest('div[data-value]');
     if (!option) return;
-
     const value = option.dataset.value;
     const index = filters[filterKey].indexOf(value);
-
     if (multiSelect) {
       if (index > -1) {
         filters[filterKey].splice(index, 1);
@@ -34,13 +39,14 @@ document.querySelectorAll('.dropdown-multi').forEach(dropdown => {
         filters[filterKey].push(value);
         option.classList.add('selected');
       }
+      
+    countSpan.textContent = `(${filters[filterKey].length})`;
     } else {
       filters[filterKey] = [value];
       optionsContainer.querySelectorAll('div').forEach(o => o.classList.remove('selected'));
       option.classList.add('selected');
+      nameSpan.textContent = ": " + option.textContent;
     }
-
-    countSpan.textContent = `(${filters[filterKey].length})`;
     applyFilters();
   });
 });
@@ -52,18 +58,60 @@ document.addEventListener('click', e => {
 });
 
 function applyFilters() {
-  console.log("Aktive Filter:", filters);
+  const container = document.getElementById('auto-liste');
+  const alleAutos = container.querySelectorAll('.car-card');
 
-  // Hier kannst du alle Filter anwenden auf deine Auto-Liste
-  // z. B. per Ajax an den Server senden oder die Autos im Frontend filtern
+  // Preis-Sortierung
+  const sortierung = filters.sortierung[0] || null;
+
+  // Filterkriterien
+  const kategorien = filters.kategorie;
+  const getriebe = filters.getriebe;
+  const sitze = filters.sitze[0] ? parseInt(filters.sitze[0]) : null;
+
+  const autoArray = Array.from(alleAutos);
+
+  autoArray.forEach(card => {
+    const typ = card.querySelector('.subtitle').textContent.toLowerCase();
+    const getriebeText = card.querySelector('.info-badge:last-child').textContent.toLowerCase();
+    const sitzText = card.querySelector('.info-badge:nth-child(3)').textContent;
+    const sitzAnzahl = parseInt(sitzText);
+
+    let sichtbar = true;
+
+    // Fahrzeugkategorie prüfen
+    if (kategorien.length > 0 && !kategorien.some(k => typ.includes(k.toLowerCase()))) {
+      sichtbar = false;
+    }
+
+    // Getriebe prüfen
+    if (getriebe.length > 0 && !getriebe.includes(getriebeText)) {
+      sichtbar = false;
+    }
+
+    // Sitzanzahl prüfen
+    if (sitze && sitzAnzahl < sitze) {
+      sichtbar = false;
+    }
+
+    card.style.display = sichtbar ? '' : 'none';
+  });
+
+  // Preis sortieren
+  if (sortierung) {
+    autoArray.sort((a, b) => {
+      const preisA = parseFloat(a.querySelector('.price').textContent);
+      const preisB = parseFloat(b.querySelector('.price').textContent);
+      return sortierung === 'preis-auf' ? preisA - preisB : preisB - preisA;
+    });
+
+    // Neu anordnen
+    autoArray.forEach(card => container.appendChild(card));
+  }
 }
 
 
 async function ladeVerfuegbareAutos() {
-  const params = new URLSearchParams(window.location.search);
-  const abholStationID = params.get('abholStationID');
-  const von = params.get('von');
-  const bis = params.get('bis');
   const container = document.getElementById('auto-liste');
 
   if (!abholStationID || !von || !bis) {
@@ -86,9 +134,11 @@ async function ladeVerfuegbareAutos() {
     for (const auto of autos) {
       const card = document.createElement('div');
       card.className = 'car-card';
-
+      
+      const kfzID = auto.kfzID;
       const preisProTag = auto.tarifPreis * auto.zuschlag;
-      const tage = Math.ceil((new Date(bis) - new Date(von)) / (1000 * 60 * 60 * 24));
+      let tage = Math.ceil((new Date(bis) - new Date(von)) / (1000 * 60 * 60 * 24));
+      tage == 0 ? tage = 1 : tage; // Mindestens 1 Tag
       const gesamtpreis = (preisProTag * tage).toFixed(2);
 
       card.innerHTML = `
@@ -96,6 +146,7 @@ async function ladeVerfuegbareAutos() {
         <div class="subtitle">${auto.typBezeichnung} ${auto.getriebe}</div>
 
         <div class="info-row">
+          <div class="hidden">${auto.kfzID}</div>
           <div class="info-badge">${auto.kilometerStand} km</div>
           <div class="info-badge">${auto.anzahlSitze} Sitze</div>
           <div class="info-badge">${auto.anzahlTueren} Türen</div>
@@ -109,9 +160,11 @@ async function ladeVerfuegbareAutos() {
           <span>${gesamtpreis} € Gesamtpreis</span>
         </div>
       `;
+      card.addEventListener('click', () => {
+        window.location.href = `/html/reservierung.html?kfzID=${kfzID}&von=${encodeURIComponent(von)}&bis=${encodeURIComponent(bis)}`;
+      });
       container.appendChild(card);
     }
-
   } catch (error) {
     console.error(error);
     container.innerText = 'Fehler beim Laden der Fahrzeuge.';
@@ -119,21 +172,31 @@ async function ladeVerfuegbareAutos() {
 }
 
 async function init() {
-  const params = new URLSearchParams(window.location.search);
-  const abholStation = params.get('abholStation');
-  const abgabeStation = params.get('abgabeStation');
-  const von = params.get('von');
-  const bis = params.get('bis');
+  params = new URLSearchParams(window.location.search);
+  von = params.get('von');
+  bis = params.get('bis');
+  abholStationID = params.get('abholStationID');
+  abgabeStationID = params.get('abgabeStationID');
+  abholStation = await fetch(`/return/station?stationID=${abholStationID}`)
+    .then(res => res.json())
+    .then(data => data.name)
+    .catch(() => null);
+  abgabeStation = await fetch(`/return/station?stationID=${abgabeStationID}`)
+    .then(res => res.json())
+    .then(data => data.name)
+    .catch(() => null);
   const abholStationElement = document.getElementById('pickup');
   const abgabeStationElement = document.getElementById('dropoff');
 
   if (abholStation) {
     abholStationElement.value = abholStation;
     abholStationElement.setAttribute('title', abholStation);
+    abholStationElement.dataset.id = abholStationID;
   }
   if (abgabeStation) {
     abgabeStationElement.value = abgabeStation;
     abgabeStationElement.setAttribute('title', abgabeStation);
+    abgabeStationElement.dataset.id = abgabeStationID;
   }
   if (von) {
     document.getElementById('pickup-date').value = von;

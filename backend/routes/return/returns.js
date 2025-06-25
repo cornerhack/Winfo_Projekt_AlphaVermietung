@@ -1,8 +1,37 @@
 import express from 'express';
 import { connection } from '../../db.js';
+import { zusaetzeBetrag } from '../../berechnungen/calculate.js';
 
 const router = express.Router();
-// Beispiel: Express Route für Mietstationen
+
+router.get('/station', async (req, res) => {
+  const stationID = req.query.stationID;
+  if (!stationID) {
+    return res.status(400).json({ error: 'stationID ist erforderlich' });
+  }
+  try {
+    const [rows] = await connection.execute(
+      `SELECT mietstationID, ort, plz, strasse, hausNr, land
+       FROM mietstationen
+       WHERE mietstationID = ?`,
+      [stationID]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'Mietstation nicht gefunden' });
+    }
+
+    const station = rows[0];
+    res.json({
+      id: station.mietstationID,
+      name: `${station.ort}, ${station.strasse} ${station.hausNr}, ${station.plz} ${station.land}`
+    });
+  } catch (error) {
+    console.error('Fehler beim Abrufen der Station:', error);
+    res.status(500).json({ error: 'Serverfehler' });
+  }
+});
+
 router.get('/stationen', async (req, res) => {
   const query = req.query.query;
 
@@ -16,7 +45,7 @@ router.get('/stationen', async (req, res) => {
        FROM mietstationen
        WHERE ort LIKE ? 
        ORDER BY ort ASC
-       LIMIT 10`,
+       LIMIT 3`,
       [`%${query}%`]
     );
 
@@ -69,5 +98,32 @@ router.get('/verfuegbare-autos', async (req, res) => {
   }
 });
 
+router.get('/fahrzeug', async (req, res) => {
+  const kfzID = req.query.kfzID;
+
+  if (!kfzID) {
+    return res.status(400).json({ error: 'kfzID ist erforderlich' });
+  }
+
+  try {
+    const [rows] = await connection.execute(
+      `SELECT * FROM kfz 
+      JOIN kfztypen t ON kfz.kfzTypID = t.kfzTypID
+      JOIN kfzPreisKategorie p ON kfz.kfzPreisKategorieID = p.kfzPreisKategorieID
+      JOIN tarife ta ON t.tarifID = ta.tarifID
+      WHERE kfzID = ?`,
+      [kfzID]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'Fahrzeug nicht gefunden' });
+    }
+
+    res.json(rows[0]);
+  } catch (error) {
+    console.error('Fehler beim Abrufen des Fahrzeugs:', error);
+    res.status(500).json({ error: 'Serverfehler' });
+  }
+});
 
 export default router;

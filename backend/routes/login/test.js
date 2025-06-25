@@ -1,5 +1,5 @@
 import { connection } from "../../db.js";
-import { encryptPassword, comparePasswords } from "./passwordCypher.js";
+import bcrypt from 'bcrypt';
 
 async function test() {
     try {
@@ -7,7 +7,7 @@ async function test() {
         // Test password encryption
         const email = 'lena.schneider@firma.de';
         const password = 'passwort123';
-        const hashedPassword = await encryptPassword(password);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         /*connection.query('update mitarbeiter set password = ? where emailAdresse = ?', [hashedPassword, email], (error, results) => {
             if (error) {
@@ -29,7 +29,7 @@ async function test() {
             console.log('User found:', user);
 
             // Test password comparison
-            const isMatch = await comparePasswords(password, user.password);
+            const isMatch = await bcrypt.compare(password, user.password);
             console.log('Password match:', isMatch ? 'Success' : 'Failure');
         });
         

@@ -1,15 +1,3 @@
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f4f6f8;
-  margin: 0;
-  padding: 2rem;
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
 .car-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -18,76 +6,14 @@ h1 {
   margin: 0 auto;
 }
 
-.car-card {
-  background: linear-gradient(135deg, #2d2f37, #1f2028);
-  color: white;
-  border-radius: 12px;
-  padding: 20px;
-  padding-right: 40px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  position: relative;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.car-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
-}
-
-.car-card .header {
-  font-weight: 700;
-  font-size: 20px;
-}
-
-.car-card .subtitle {
-  font-size: 14px;
-  opacity: 0.8;
-}
-
-.car-card .info-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  font-size: 13px;
-}
-
-.car-card .info-badge {
-  background: #444754;
-  padding: 4px 10px;
-  border-radius: 6px;
-}
-
-.car-card .image {
-  width: 100%;
-  height: 160px;
-  object-fit: contain;
-  border-radius: 8px;
-  background: #1a1a1a;
-  padding: 10px;
-}
-
-.car-card .price {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.car-card .price span {
-  font-weight: normal;
-  font-size: 12px;
-  opacity: 0.7;
-}
-
 #suchleiste {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: center;
-  gap: 1rem;
   padding: 1rem;
-  margin-bottom: 2rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
   background-color: #f8f9fa;
   border-radius: 10px;
 }
@@ -173,7 +99,7 @@ h1 {
   flex-wrap: wrap;
   gap: 1rem;
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  place-content: center;
 }
 
 .dropdown-multi {
@@ -226,4 +152,7 @@ h1 {
   color: white;
 }
 
-
+.car-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+}

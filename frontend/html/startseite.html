@@ -3,43 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Auto mieten - Sixt Style</title>
+  <title>Auto mieten</title>
   <link rel="stylesheet" href="../css/startseite.css">
+  <link rel="stylesheet" href="../css/universal.css">
+  <link rel="stylesheet" href="../css/popup.css">
 </head>
 <body>
-
-  <header>
-    <div class="logo">AutoMieten24</div>
-    <button class="login-btn">Login</button>
-  </header>
-
+  <div id="header-placeholder"></div>
+  <div id="popup-placeholder"></div>
   <main class="container">
-    <form id="suchleiste">
-        <div class="input-group">
-            <label for="pickup">Abholort</label>
-            <input type="text" id="pickup" autocomplete="off" placeholder="Ort eingeben..." required>
-            <div id="pickup-list" class="autocomplete-list"></div>
-        </div>
-
-        <div class="input-group">
-            <label for="dropoff">Abgabeort</label>
-            <input type="text" id="dropoff" autocomplete="off" placeholder="Ort eingeben..." required>
-            <div id="dropoff-list" class="autocomplete-list"></div>
-        </div>
-
-      <div class="form-group">
-        <label for="pickup-date">Abholdatum</label>
-        <input type="date" id="pickup-date" required>
-      </div>
-
-      <div class="form-group">
-        <label for="return-date">Abgabedatum</label>
-        <input type="date" id="return-date" required>
-      </div>
-
-      <button type="submit" id="submit" class="submit-btn">Autos anzeigen</button>
-    </form>
+    <div id="suchleiste-placeholder"></div>
   </main>
-<script src="../js/startseite.js"></script>
+
+  <script src="../js/header.js"></script>
+  <script src="../js/loadPopup.js" type="module"></script>
+  <script src="../js/suchleiste.js"></script>
+  <script src="../js/autofill.js"></script>
 </body>
 </html>

@@ -30,7 +30,7 @@ export async function zusaetzeBetrag(reservierungID){
                     summe += 15 * anzahlMietTage;
                 break;
                 case "tankservice":
-                    summe += 20;
+                    summe += 50;
                 default:
                 break;
             } 

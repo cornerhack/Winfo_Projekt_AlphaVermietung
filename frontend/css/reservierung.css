@@ -1,0 +1,56 @@
+.reservierungs-container {
+      display: flex;
+      gap: 2rem;
+      padding: 2rem;
+      margin-left: 2rem;
+      margin-right: 2;
+    }
+    .left, .right {
+      flex: 1;
+    }
+    .zusatz-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      margin: 1rem 0;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+    .zusatz-option input {
+      transform: scale(1.2);
+    }
+    .gesamtpreis-box {
+      margin-top: 2rem;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+    
+.option-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.beschreibung {
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  color: #838383;
+  margin-left: 1.5rem; /* Optional: etwas eingerückt */
+}
+
+.car-card .image {
+  max-width: 100%;
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #1a1a1a;
+  padding: 10px;
+}
+
+.car-card{
+  max-width: 100%;
+}

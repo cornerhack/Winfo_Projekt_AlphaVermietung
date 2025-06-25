@@ -1,0 +1,43 @@
+body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ff6600;
+  }
+
+.login-btn {
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #000;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }

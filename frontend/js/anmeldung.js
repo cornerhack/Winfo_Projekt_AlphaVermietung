@@ -8,19 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
     testButton.addEventListener('click', function() {
         test();
     });
-
-    async function test() {
-        await fetch('/pdf_vorlagen/rueckgabeprotokoll', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ mitarbeiterID: 1,
-                mietvertragID: 51,
-                tank: 0.8,
-                sauberkeit: "sauber",
-                schadenTarifID: 13,
-                kilometerstand: 45213,})
-            });
-        }
     
     loginToggle.addEventListener('click', function() {
         loginToggle.classList.add('active');
@@ -91,25 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const companyField = document.getElementById('companyNameContainer');
         companyField.classList.toggle('hidden', !this.checked);
     });
-
-    async function sendMail() {
-        try {
-            const response = await fetch('/mailer/sendmail', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ "name":"Roy", "email":"royahmad1096@gmail.com" })
-            });
-            const data = await response.json();
-            if (response.ok)
-                alert(data.message);
-            else
-                alert(data.error);
-            
-        } catch (error) {
-            alert('Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
-        }
-    }
-
 
     async function login(email, password) {
         try {
