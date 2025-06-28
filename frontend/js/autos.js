@@ -1,14 +1,18 @@
+import {initParams} from "./initParams.js";
+
 const filters = {
   sortierung: [],
   kategorie: [],
   getriebe: [],
   sitze: []
 };
-let params;
+
 let abgabeStationID;
 let abholStationID;
 let abholStation;
 let abgabeStation;
+let von;
+let bis;
 
 
 document.querySelectorAll('.dropdown-multi').forEach(dropdown => {
@@ -138,7 +142,7 @@ async function ladeVerfuegbareAutos() {
       const kfzID = auto.kfzID;
       const preisProTag = auto.tarifPreis * auto.zuschlag;
       let tage = Math.ceil((new Date(bis) - new Date(von)) / (1000 * 60 * 60 * 24));
-      tage == 0 ? tage = 1 : tage; // Mindestens 1 Tag
+      tage === 0 ? tage = 1 : tage; // Mindestens 1 Tag
       const gesamtpreis = (preisProTag * tage).toFixed(2);
 
       card.innerHTML = `
@@ -161,7 +165,7 @@ async function ladeVerfuegbareAutos() {
         </div>
       `;
       card.addEventListener('click', () => {
-        window.location.href = `/html/reservierung.html?kfzID=${kfzID}&von=${encodeURIComponent(von)}&bis=${encodeURIComponent(bis)}`;
+        window.location.href = `/html/reservierung.html?kfzID=${kfzID}&von=${encodeURIComponent(von)}&bis=${encodeURIComponent(bis)}&abholStationID=${encodeURIComponent(abholStationID)}&abgabeStationID=${encodeURIComponent(abgabeStationID)}`;
       });
       container.appendChild(card);
     }
@@ -172,19 +176,13 @@ async function ladeVerfuegbareAutos() {
 }
 
 async function init() {
-  params = new URLSearchParams(window.location.search);
-  von = params.get('von');
-  bis = params.get('bis');
-  abholStationID = params.get('abholStationID');
-  abgabeStationID = params.get('abgabeStationID');
-  abholStation = await fetch(`/return/station?stationID=${abholStationID}`)
-    .then(res => res.json())
-    .then(data => data.name)
-    .catch(() => null);
-  abgabeStation = await fetch(`/return/station?stationID=${abgabeStationID}`)
-    .then(res => res.json())
-    .then(data => data.name)
-    .catch(() => null);
+  const {v, b, ahID, agID, ah, ag} = await initParams();
+  von = v;
+  bis = b;
+  abholStationID = ahID;
+  abgabeStationID = agID;
+  abholStation = ah;
+  abgabeStation = ag;
   const abholStationElement = document.getElementById('pickup');
   const abgabeStationElement = document.getElementById('dropoff');
 
@@ -200,9 +198,11 @@ async function init() {
   }
   if (von) {
     document.getElementById('pickup-date').value = von;
+    von = new Date(von);
   }
   if (bis) {
     document.getElementById('return-date').value = bis;
+    bis = new Date(bis);
   }
 
   // Lade verfügbare Autos

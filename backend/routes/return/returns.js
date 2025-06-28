@@ -1,46 +1,40 @@
 import express from 'express';
-import { connection } from '../../db.js';
-import { zusaetzeBetrag } from '../../berechnungen/calculate.js';
+import connection from '../../db.js';
 
 const router = express.Router();
 
 router.get('/station', async (req, res) => {
   const stationID = req.query.stationID;
-  if (!stationID) {
-    return res.status(400).json({ error: 'stationID ist erforderlich' });
-  }
+  const ort = await getStation(stationID);
+  res.json({name: ort});
+});
+
+export async function getStation(id){
   try {
-    const [rows] = await connection.execute(
-      `SELECT mietstationID, ort, plz, strasse, hausNr, land
+    const [rows] = await connection.promise().execute(
+        `SELECT mietstationID, ort, plz, strasse, hausNr, land
        FROM mietstationen
        WHERE mietstationID = ?`,
-      [stationID]
+        [id]
     );
 
     if (rows.length === 0) {
-      return res.status(404).json({ error: 'Mietstation nicht gefunden' });
+      return null;
     }
 
     const station = rows[0];
-    res.json({
-      id: station.mietstationID,
-      name: `${station.ort}, ${station.strasse} ${station.hausNr}, ${station.plz} ${station.land}`
-    });
+    return `${station.strasse} ${station.hausNr}, ${station.plz} ${station.ort}, ${station.land}`
   } catch (error) {
     console.error('Fehler beim Abrufen der Station:', error);
-    res.status(500).json({ error: 'Serverfehler' });
+    return null;
   }
-});
+}
 
 router.get('/stationen', async (req, res) => {
   const query = req.query.query;
 
-  if (!query || query.length < 2) {
-    return res.status(400).json({ error: 'Query muss mindestens 2 Zeichen enthalten.' });
-  }
-
   try {
-    const [rows] = await connection.execute(
+    const [rows] = await connection.promise().execute(
       `SELECT mietstationID, ort, plz, strasse, hausNr, land
        FROM mietstationen
        WHERE ort LIKE ? 
@@ -52,7 +46,7 @@ router.get('/stationen', async (req, res) => {
     // Optional: Name für Frontend zusammenbauen
     const results = rows.map(row => ({
       id: row.mietstationID,
-      name: `${row.ort}, ${row.strasse} ${row.hausNr}, ${row.plz} ${row.land}`
+      name: `${row.strasse} ${row.hausNr}, ${row.plz} ${row.ort}, ${row.land}`
     }));
 
     res.json(results);
@@ -70,7 +64,7 @@ router.get('/verfuegbare-autos', async (req, res) => {
   }
 
   try {
-    const [autos] = await connection.execute(
+    const [autos] = await connection.promise().execute(
       `SELECT * FROM kfz k
       JOIN kfztypen t ON k.kfzTypID = t.kfzTypID
       JOIN kfzPreisKategorie p ON k.kfzPreisKategorieID = p.kfzPreisKategorieID
@@ -101,12 +95,8 @@ router.get('/verfuegbare-autos', async (req, res) => {
 router.get('/fahrzeug', async (req, res) => {
   const kfzID = req.query.kfzID;
 
-  if (!kfzID) {
-    return res.status(400).json({ error: 'kfzID ist erforderlich' });
-  }
-
   try {
-    const [rows] = await connection.execute(
+    const [rows] = await connection.promise().execute(
       `SELECT * FROM kfz 
       JOIN kfztypen t ON kfz.kfzTypID = t.kfzTypID
       JOIN kfzPreisKategorie p ON kfz.kfzPreisKategorieID = p.kfzPreisKategorieID
@@ -126,4 +116,55 @@ router.get('/fahrzeug', async (req, res) => {
   }
 });
 
+router.get('/meineReservierungen', async (req, res) => {
+  const kundeID = req.session.user?.id;
+
+  if (!kundeID) return res.status(401).json({ error: 'Nicht eingeloggt' });
+
+  const [results] = await connection.promise().query(`
+    SELECT r.*, 
+           k.marke, 
+           k.modell,
+           CONCAT_WS(' ', abhol.strasse, abhol.hausNr, abhol.plz, abhol.ort) AS abholort,
+           CONCAT_WS(' ', abgabe.strasse, abgabe.hausNr, abgabe.plz, abgabe.ort) AS abgabeort
+    FROM reservierungen r
+    JOIN kfz k ON r.kfzID = k.kfzID
+    JOIN mietstationen abhol ON r.abholstationID = abhol.mietstationID
+    JOIN mietstationen abgabe ON r.abgabestationID = abgabe.mietstationID
+    WHERE r.kundeID = ?
+    ORDER BY r.mietbeginn DESC
+  `, [kundeID]);
+
+  res.json(results);
+});
+
+router.post('/stornieren/:id', async (req, res) => {
+  const { id } = req.params;
+  const kundeID = req.session.user?.id;
+
+  // Sicherheitscheck
+  const [rows] = await connection.promise().query(
+      'SELECT * FROM reservierungen WHERE reservierungID = ? AND kundeID = ?',
+      [id, kundeID]
+  );
+
+  if (rows.length === 0) return res.status(403).json({ error: 'Keine Berechtigung' });
+
+  await connection.promise().query(
+      'UPDATE reservierungen SET status = ? WHERE reservierungID = ?',
+      [ "storniert", id]
+  );
+  res.status(200).json({ message: 'Reservierung storniert' });
+});
+
+router.get('/reservierung/:id', async (req, res) => {
+  const [rows] = await connection.promise().query('SELECT * FROM reservierungen WHERE reservierungID = ?', [req.params.id]);
+  res.json(rows[0]);
+});
+
+router.put('/reservierungen/:id', async (req, res) => {
+  const { zusaetze, gesamtbetrag } = req.body;
+  await connection.promise().query('UPDATE reservierungen SET zusaetze = ?, gesamtbetrag = ? WHERE reservierungID = ?', [zusaetze, gesamtbetrag, req.params.id]);
+  res.sendStatus(200);
+});
 export default router;

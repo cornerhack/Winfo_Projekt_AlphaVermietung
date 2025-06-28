@@ -1,22 +1,22 @@
-import { connection } from "../../db.js";
+import connection from "../../db.js";
 import bcrypt from 'bcrypt';
 
 async function test() {
     try {
         
         // Test password encryption
-        const email = 'lena.schneider@firma.de';
-        const password = 'passwort123';
+        const email = 'anna.schmidt@email.de';
+        const password = 'pw1234';
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        /*connection.query('update mitarbeiter set password = ? where emailAdresse = ?', [hashedPassword, email], (error, results) => {
+        connection.promise().query('update kunden set password = ? where emailAdresse = ?', [hashedPassword, email], (error, results) => {
             if (error) {
                 console.error('Database update error:', error);
                 return;
             }
             console.log('Password updated successfully:', results);
-        });*/
-        connection.query('select * from mitarbeiter where emailAdresse = ?', [email], async (error, results) => {
+        });
+        /*connection.promise().query('select * from mitarbeiter where emailAdresse = ?', [email], async (error, results) => {
             if (error) {
                 console.error('Database query error:', error);
                 return;
@@ -31,9 +31,10 @@ async function test() {
             // Test password comparison
             const isMatch = await bcrypt.compare(password, user.password);
             console.log('Password match:', isMatch ? 'Success' : 'Failure');
-        });
+        });*/
         
     } catch (error) {
         console.error('Error during test execution:', error);
     }
 }
+test();

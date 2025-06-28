@@ -1,6 +1,6 @@
 .car-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 24px;
   max-width: 1200px;
   margin: 0 auto;
@@ -16,6 +16,10 @@
   padding-right: 3rem;
   background-color: #f8f9fa;
   border-radius: 10px;
+}
+
+.input-group{
+  position: relative;
 }
 
 .input-group,
@@ -46,12 +50,22 @@
 
 .autocomplete-list {
   position: absolute;
+  top: 100%; /* direkt unter dem Input */
+  left: 0;
+  right: 0;
   background: white;
-  border: 1px solid #ccc;
   border-top: none;
   max-height: 150px;
   overflow-y: auto;
   z-index: 1000;
+  width: 100%; /* gleiche Breite wie das Input-Feld */
+  box-sizing: border-box;
+}
+
+.autocomplete-item {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  cursor: pointer;
 }
 
 .autocomplete-list div {

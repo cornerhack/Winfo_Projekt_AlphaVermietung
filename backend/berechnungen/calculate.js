@@ -1,33 +1,25 @@
-import { connection } from "../db.js";
+import connection from "../db.js";
 
 export async function gesamtBetrag(){
 
 }
 
-export async function zusaetzeBetrag(reservierungID){
-    try {
-        const [rows] = await connection.execute(
-            `SELECT zusaetze FROM reservierungen WHERE reservierungID = ?`,
-            [reservierungID]
-        );
-        const anzahlMietTage = await getMiettage(reservierungID);
-        const data = rows[0];
-        const zusaetzeString = data.zusaetze || "";
-        const zusaetzeArray = zusaetzeString.split(",").map(z => z.trim());
+export async function zusaetzeBetrag(zusatz, tage){
+        const zusaetzeArray = zusatz.split(",").map(z => z.trim());
         let summe = 0;
         for(const zusatz of zusaetzeArray){
             switch (zusatz.toLowerCase()) {
                 case "zusatzfahrer":
-                    summe += 5 * anzahlMietTage;
+                    summe += 5 * tage;
                 break;
                 case "kindersitz":
-                    summe += 3 * anzahlMietTage;
+                    summe += 3 * tage;
                 break;
                 case "navigationssystem":
-                    summe += 7 * anzahlMietTage;
+                    summe += 7 * tage;
                 break;
-                case "versicherung":
-                    summe += 15 * anzahlMietTage;
+                case "vollkaskoversicherung":
+                    summe += 15 * tage;
                 break;
                 case "tankservice":
                     summe += 50;
@@ -35,18 +27,12 @@ export async function zusaetzeBetrag(reservierungID){
                 break;
             } 
         }
-        
         return summe;
-    } catch (error) {
-        console.error("Fehler beim Abrufen der Zusatzleistungen:", error);
-        throw error;
-    }
-
 }
 
 export async function getMiettage(reservierungID) {
     try {
-        const [rows] = await connection.execute(
+        const [rows] = await connection.promise().execute(
             `SELECT DATE_FORMAT(mietbeginn, '%Y-%m-%d') AS mietbeginn, DATE_FORMAT(mietende, '%Y-%m-%d') AS mietende FROM reservierungen WHERE reservierungID = ?`,
             [reservierungID]
         );

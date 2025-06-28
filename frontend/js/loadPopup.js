@@ -9,6 +9,8 @@ fetch('/html/popup.html')
     })
 });
 
+let versuche = 0;
+
 function closeLoginPopup() {
     document.getElementById('popup').style.display = 'none';
 }
@@ -33,6 +35,7 @@ function initPopupEvents() {
   const loginForm = document.getElementById('login-form');
   const registerForm = document.getElementById('register-form');
   const companyCheckbox = document.getElementById('isCompany');
+  const companyText = document.getElementById('companyNameContainer');
 
   loginToggle.addEventListener('click', () => {
     loginToggle.classList.add('active');
@@ -49,12 +52,22 @@ function initPopupEvents() {
   });
 
   companyCheckbox.addEventListener('change', () => {
-    
+    if (companyCheckbox.checked) {
+      companyText.classList.add('active');
+      companyText.classList.remove('hidden');
+    }else{
+      companyText.classList.add('hidden');
+      companyText.classList.remove('active');
+    }
   })
 
   // Registrierung
   registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const companyName = companyText.value;
+    const vorname = document.getElementById('vorname').value;
+    const nachname = document.getElementById('nachname').value;
+    const email = document.getElementById('emailR').value;
     const password = document.getElementById('firstPassword').value;
     const confirm = document.getElementById('secondPassword').value;
 
@@ -68,8 +81,10 @@ function initPopupEvents() {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-          name: document.getElementById('usernameR').value,
-          email: document.getElementById('emailR').value,
+          companyName,
+          vorname,
+          nachname,
+          email,
           password
         })
       });
@@ -77,9 +92,8 @@ function initPopupEvents() {
       if (!res.ok) throw new Error('Registrierung fehlgeschlagen');
       closeLoginPopup();
       await checkLoginStatus();
-
+      location.reload();
     } catch (err) {
-      console.error(err);
       alert('Fehler bei der Registrierung');
     }
   });
@@ -87,21 +101,48 @@ function initPopupEvents() {
   // Login
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const button = document.getElementById('login-form').querySelector('button[type="submit"]');
     const email = document.getElementById('emailL').value;
     const password = loginForm.querySelector('input[type="password"]').value;
-
-    const res = await fetch('/login/login', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ email, password })
+    const gesperrt = await fetch(`/login/istGesperrt?email=${encodeURIComponent(email)}`, {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'}
     });
-
-    const data = await res.json();
-    if (data.success) {
-      closeLoginPopup();
-      await checkLoginStatus();
-    } else {
-      alert(data.error || 'Login fehlgeschlagen');
+    const istGesperrt = await gesperrt.json();
+    if(istGesperrt === 0){
+      const res = await fetch('/login/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ email: email, password: password })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        versuche = 0;
+        closeLoginPopup();
+        await checkLoginStatus();
+        if(data.person === "kunde")
+          location.reload();
+        else
+          window.location.href = "/html/mitarbeiterStartseite.html";
+      } else {
+        versuche += 1;
+        if(versuche === 3){
+          button.disabled = true;
+          alert('Zu viele Fehlversuche! Bitte ändern sie ihr Passwort über "passwort vergessen?".');
+          await fetch('/login/sperren',{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({email: email})
+          });
+          return;
+        }
+        alert(data.error || data.message || 'Email oder Passwort ist falsch!');
+      }
+    }else if(istGesperrt === 1) {
+      button.disabled = true;
+      alert('Ihr Account wurde gesperrt! Bitte ändern sie ihr Passwort über "passwort vergessen?".');
+    }else{
+      alert(istGesperrt.error || istGesperrt.message || 'Email oder Passwort ist falsch!');
     }
   });
 }

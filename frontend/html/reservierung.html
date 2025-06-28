@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
@@ -6,7 +7,9 @@
   <link rel="stylesheet" href="../css/car-card.css">
   <link rel="stylesheet" href="../css/reservierung.css">
   <link rel="stylesheet" href="../css/universal.css">
+  <link rel="stylesheet" href="../css/headerLogin.css">
   <link rel="stylesheet" href="../css/popup.css">
+  <link rel="stylesheet" href="../css/auswahl.css">
 </head>
 <body>
   <div id="header-placeholder"></div>
@@ -57,12 +60,35 @@
 
       <div class="gesamtpreis-box">
         Gesamtpreis: <span id="gesamtpreis">0.00</span> €
+        <button type="submit" class="absenden" id="absenden">Jetzt reservieren!</button>
       </div>
+    </div>
+  </div>
+
+  <div class="bestaetigungs-container" id="bestaetigungs-container" style="display: none;">
+    <div class="bestaetigung-card">
+      <h2>Reservierung erfolgreich!</h2>
+      <p>Vielen Dank für Ihre Reservierung. Eine Reservierungsbestätigung wurde Ihnen per E-Mail zugesendet und kann </p>
+
+      <div class="bestaetigung-info">
+        <h3>Ihre Reservierungsdetails:</h3>
+        <ul id="bestaetigungs-details">
+          <!-- Dynamisch gefüllt -->
+        </ul>
+      </div>
+
+      <div class="bestaetigung-hinweis">
+        <p>Bitte bringen Sie zur Abholung einen gültigen Führerschein und Personalausweis mit.</p>
+        <p>Wir freuen uns, Sie bald bei uns begrüßen zu dürfen!</p>
+      </div>
+
+      <a href="/" class="zurueck-home">Zurück zur Startseite</a>
     </div>
   </div>
 
   <script src="../js/header.js"></script>
   <script src="../js/loadPopup.js" type="module"></script>
-  <script src="../js/reservierung.js"></script>
+  <script src="../js/reservierung.js" type="module"></script>
+  <script src="../js/auth.js" type="module"></script>
 </body>
 </html>

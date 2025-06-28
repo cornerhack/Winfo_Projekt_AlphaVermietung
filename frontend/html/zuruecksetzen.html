@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Passwort zurücksetzen</title>
+    <link rel="stylesheet" href="../css/startseite.css" />
+    <link rel="stylesheet" href="../css/universal.css" />
+    <link rel="stylesheet" href="../css/vergessen.css" />
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<main class="passwort-vergessen-container">
+    <h1>Neues Passwort festlegen</h1>
+    <p>Bitte gib dein neues Passwort ein und bestätige es.</p>
+
+    <form id="set-password-form" class="form">
+        <input
+                type="password"
+                placeholder="Neues Passwort"
+                id="firstPassword"
+                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}"
+                title="Mindestens 8 Zeichen, Groß-/Kleinbuchstaben, Zahl & Sonderzeichen"
+                required
+        />
+        <input
+                type="password"
+                placeholder="Passwort bestätigen"
+                id="secondPassword"
+                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}"
+                title="Mindestens 8 Zeichen, Groß-/Kleinbuchstaben, Zahl & Sonderzeichen"
+                required
+        />
+        <button type="submit">Passwort speichern</button>
+        <p id="feedback" style="margin-top: 1rem;"></p>
+    </form>
+</main>
+
+<script src="../js/header.js"></script>
+<script src="../js/zuruecksetzen.js"></script>
+</body>
+</html>

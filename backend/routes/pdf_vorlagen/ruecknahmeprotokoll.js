@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 import dayjs from "dayjs";
 import { fileURLToPath } from "url";
-import { connection } from "../../db.js";
+import connection from "../../db.js";
 
 const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
@@ -36,7 +36,7 @@ router.post("/rueckgabeprotokoll", async (req, res) => {
     const protokollDatum = dayjs().format("YYYY-MM-DD");
 
     // Daten in die Datenbank für die Rückgabe einfügen
-    const [insertResult] = await connection.execute(
+    const [insertResult] = await connection.promise().execute(
       `INSERT INTO ruecknahmeprotokolle 
        (ruecknahmeprotokollID, ersteller, protokollDatum, tank, sauberkeit, schadenTarifID, kilometerstand, mietvertragID)
        VALUES (21, ?, ?, ?, ?, ?, ?, ?)`,
@@ -44,14 +44,14 @@ router.post("/rueckgabeprotokoll", async (req, res) => {
     );
 
     // Reservierung auf "abgeschlossen" setzen
-    await connection.execute(
+    await connection.promise().execute(
       `UPDATE reservierungen
          SET status = 'abgeschlossen'
          WHERE reservierungID = ?`,
         [mietvertragID]);
 
     // PDF direkt erzeugen
-    const [rows] = await connection.execute(
+    const [rows] = await connection.promise().execute(
       `SELECT rp.*, 
               DATE_FORMAT(rp.protokollDatum, '%d.%m.%Y') AS datum,
               m.vorname AS mitarbeiterVorname,
@@ -71,7 +71,7 @@ router.post("/rueckgabeprotokoll", async (req, res) => {
 
     const data = rows[0];
     // Kilometerstand und Abgabestation aktualisieren
-    await connection.execute(
+    await connection.promise().execute(
       `UPDATE kfz 
        SET kilometerStand = ?, standortMietstationID = ? 
        WHERE kfzID = ?`,

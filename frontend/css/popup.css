@@ -66,7 +66,18 @@
             margin-bottom: 15px;
             padding: 10px;
             border: 1px solid #ddd;
+            width: 100%;
             border-radius: 4px;
+        }
+
+        .checkboxLabel{
+            width: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-size: 14px;
         }
 
         .form button[type="submit"] {
@@ -83,3 +94,21 @@
             margin-bottom: 15px;
             font-size: 14px;
         }
+
+#login-form button:disabled {
+    background-color: #666;
+    cursor: not-allowed;
+    color: #ccc;
+}
+
+#login-form a {
+    display: block;
+    margin: 8px 0;
+    font-size: 0.9rem;
+    color: #007bff;
+    text-decoration: none;
+}
+
+#login-form a:hover {
+    text-decoration: underline;
+}

@@ -25,6 +25,7 @@ app.use(session({
   }
 }));
 app.use('/html', express.static(join(__dirname, '../frontend/html')));
+app.use('/pdfs', express.static(join(__dirname, 'pdfs')));
 
 app.get('/', (req, res) => {
   res.sendFile(join(__dirname, '../frontend/html/startseite.html'));

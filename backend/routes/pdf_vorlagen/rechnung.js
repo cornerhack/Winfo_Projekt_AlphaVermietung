@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 import dayjs from "dayjs";
 import { fileURLToPath } from "url";
-import { connection } from "../../db.js";
+import connection from "../../db.js";
 import { PassThrough } from "stream";
 import { zusaetzeBetrag } from "../../berechnungen/calculate.js";
 
@@ -21,7 +21,7 @@ router.post("/rechnung", async (req, res) => {
     return res.status(400).json({ error: "Rechnungsnummer fehlt" });
   
   try {
-    const [rows] = await connection.execute(
+    const [rows] = await connection.promise().execute(
       `
       SELECT r.rechnungNr, r.mietvertragID, r.kundeID, r.ruecknahmeprotokollID, DATE_FORMAT(r.rechnungDatum, '%Y-%m-%d') AS rechnungDatum,
             r.rechnungBetrag, DATE_FORMAT(r.zahlungslimit, '%Y-%m-%d') AS zahlungslimit,

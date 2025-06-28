@@ -1,0 +1,37 @@
+.absenden{
+    margin-left: 1rem;
+}
+
+.zusatz-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+.zusatz-option input {
+    transform: scale(1.2);
+}
+.gesamtpreis-box {
+    margin-top: 2rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.option-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    white-space: nowrap;
+}
+
+.beschreibung {
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+    color: #838383;
+    margin-left: 1.5rem;
+}

@@ -19,7 +19,6 @@ function initialSuchleiste() {
             const dropoffInput = document.getElementById('dropoff');
             let abholStationID = pickupInput.dataset.id;
             let abgabeStationID = dropoffInput.dataset.id;
-            console.log(abholStationID, abgabeStationID);
             const von = document.getElementById('pickup-date').value;
             const bis = document.getElementById('return-date').value;
 

@@ -3,43 +3,11 @@
       gap: 2rem;
       padding: 2rem;
       margin-left: 2rem;
-      margin-right: 2;
+      margin-right: 2rem;
     }
     .left, .right {
       flex: 1;
     }
-    .zusatz-option {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      margin: 1rem 0;
-      padding: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background: #f9f9f9;
-    }
-    .zusatz-option input {
-      transform: scale(1.2);
-    }
-    .gesamtpreis-box {
-      margin-top: 2rem;
-      font-size: 1.3rem;
-      font-weight: bold;
-    }
-    
-.option-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.beschreibung {
-  margin-top: 0.25rem;
-  font-size: 0.9rem;
-  color: #838383;
-  margin-left: 1.5rem; /* Optional: etwas eingerückt */
-}
 
 .car-card .image {
   max-width: 100%;
@@ -53,4 +21,65 @@
 
 .car-card{
   max-width: 100%;
+}
+
+.bestaetigungs-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: #f9f9f9;
+}
+
+.bestaetigung-card {
+    max-width: 700px;
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.bestaetigung-card h2 {
+    color: #28a745;
+    margin-bottom: 1rem;
+}
+
+.bestaetigung-info h3 {
+    margin-top: 1.5rem;
+    color: #333;
+}
+
+#bestaetigungs-details {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.5rem;
+    text-align: left;
+}
+
+#bestaetigungs-details li {
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.bestaetigung-hinweis {
+    margin-top: 2rem;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.zurueck-home {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.zurueck-home:hover {
+    background-color: #0056b3;
 }

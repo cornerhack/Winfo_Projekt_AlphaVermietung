@@ -11,13 +11,13 @@ h2 {
   text-align: center;
 }
 
-.logo {
+.logo a{
     font-size: 1.5rem;
     font-weight: bold;
     color: #ff6600;
   }
 
-.login-btn {
+.login-btn, .logout-button, .absenden {
     background-color: #ff6600;
     color: white;
     border: none;

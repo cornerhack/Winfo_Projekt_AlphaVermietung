@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Passwort vergessen</title>
+    <link rel="stylesheet" href="../css/startseite.css" />
+    <link rel="stylesheet" href="../css/universal.css" />
+    <link rel="stylesheet" href="../css/vergessen.css" />
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<main class="passwort-vergessen-container">
+    <h1>Passwort zurücksetzen</h1>
+    <p>Gib deine E-Mail-Adresse ein. Wir senden dir eine Mail mit einem Link zum Zurücksetzen deines Passworts.</p>
+
+    <form id="reset-form" class="form">
+        <input
+                type="email"
+                id="reset-email"
+                placeholder="E-Mail-Adresse"
+                required
+        />
+        <button type="submit">Zurücksetzen</button>
+        <p id="feedback"></p>
+    </form>
+</main>
+
+<script src="../js/header.js"></script>
+<script src="../js/vergessen.js"></script>
+</body>
+</html>

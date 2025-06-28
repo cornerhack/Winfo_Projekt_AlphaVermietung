@@ -13,17 +13,19 @@
                     <input type="email" id ="emailL" placeholder="Email" pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,63}"
                     title="Bitte eine gültige E-Mail eingeben (z.B. nutzer@example.de)" required>
                     <input type="password" placeholder="Passwort" required>
+                    <a href="../html/vergessen.html">Passwort vergessen?</a>
                     <button type="submit">Anmelden</button>
                 </form>
                 <form id="register-form" class="form hidden" autocomplete="off">
                     <h2>Registrieren</h2>
-                    <label>
+                    <label class="checkboxLabel">
                         <input type="checkbox" id="isCompany"> Unternehmen?
                     </label>
                     <div id="companyNameContainer" class="hidden">
                         <input type="text" id="companyName" placeholder="Name des Unternehmens">
                     </div>
-                    <input type="text" id = "usernameR" placeholder="Name" required>
+                    <input type="text" id = "vorname" placeholder="Vorname" required>
+                    <input type="text" id = "nachname" placeholder="Nachname" required>
                     <input type="email" id = "emailR" placeholder="Email" pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,63}"
                     title="Bitte eine gültige E-Mail eingeben (z.B. nutzer@example.de)" required>
                     <input type="password" placeholder="Passwort" id="firstPassword"

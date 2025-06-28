@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 import dayjs from "dayjs";
 import { fileURLToPath } from "url";
-import { connection } from "../../db.js";
+import connection from "../../db.js";
 
 const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
@@ -18,7 +18,7 @@ router.post("/mahnung", async (req, res) => {
   }
 
   try {
-    const [rows] = await connection.execute(
+    const [rows] = await connection.promise().execute(
       `
       SELECT r.*, k.vorname, k.nachname, k.unternehmen, k.emailAdresse
       FROM rechnungen r
@@ -65,7 +65,7 @@ router.post("/mahnung", async (req, res) => {
     const neuesZahlungslimit = today.add(7, "day").format("YYYY-MM-DD");
 
     // Datenbank aktualisieren
-    await connection.execute(
+    await connection.promise().execute(
       `UPDATE rechnungen SET rechnungBetrag = ?, mahnstatus = ?, zahlungslimit = ? WHERE rechnungNr = ?`,
       [gesamtbetrag, neueMahnstufe, neuesZahlungslimit, rechnungNr]
     );
