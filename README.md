@@ -49,7 +49,7 @@
   - [christian.bovenkerk@studmail.w-hs.de](mailto:christian.bovenkerk@studmail.w-hs.de)
 
 - **Mohammed Belamallem**
-  - [mohamed.belamallem@studmail.w-hs.de](mailto:mohammed.belamallem@studmail.w-hs.de)
+  - [mohammed.belamallem@studmail.w-hs.de](mailto:mohammed.belamallem@studmail.w-hs.de)
     
 - **Luca Remie**
   - [luca.remie@studmail.w-hs.de](mailto:luca.remie@studmail.w-hs.de)
