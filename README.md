@@ -15,18 +15,17 @@
 -  [Risikomanagement](https://link-zu-onedrive-excel) !
 -  [Kostenreporting](https://docs.google.com/spreadsheets/d/15wFkdG4pU2KYF6CzObLUC2lXlmhkhckMKj3ChtuShh4/edit?usp=sharing)
 -  [Testfälle](https://link-zu-google-docs) !
-- [Dokumentation zur Nutzung von KI-Tools](https://link-zum-dokument) !
+- [Dokumentation zur Nutzung von KI-Tools](https://docs.google.com/document/d/1BlBkyYJo1Rm-une-ZAagnk6kbSxjRWtJBkPg1wGcEQk/edit?usp=sharing) 
   
 
 ---
 
 ## Design & Planung
 
--  [Gantt-Diagramm](https://link-zu-google-sheets) !
--  [BPMN-Prozessmodell](https://signavio-link) !
+-  [Gantt-Diagramm](https://docs.google.com/spreadsheets/d/1A8mtONvlZpncYvhavonJjvMApBQZnYpaMX9P6lQrQKU/edit?usp=sharing) 
 -  [Mockups / UI-Design](https://claritee.io/...) !
 -  [Sequenzdiagramme](https://github.com/dein-repo/diagrams) !
--  [Anwendungsfalldiagramme](https://signavio-link) !
+-  [Anwendungsfalldiagramme](https://docs.google.com/spreadsheets/d/1ZSPXvMbbACY-XNdplNhNhYPcBcWHUS9d6ika1TpZjXg/edit?usp=sharing)
 
 ---
 
