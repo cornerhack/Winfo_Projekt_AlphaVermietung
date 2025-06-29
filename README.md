@@ -37,8 +37,7 @@ Mahnwesen
 
 -  [Gantt-Diagramm](https://docs.google.com/spreadsheets/d/1A8mtONvlZpncYvhavonJjvMApBQZnYpaMX9P6lQrQKU/edit?usp=sharing) 
 -  [Mockups / UI-Design](https://claritee.io/...) !
--  [Sequenzdiagramme](https://github.com/dein-repo/diagrams) !
--  [Anwendungsfalldiagramme](https://docs.google.com/spreadsheets/d/1ZSPXvMbbACY-XNdplNhNhYPcBcWHUS9d6ika1TpZjXg/edit?usp=sharing)
+-  [Anwendungsfalldiagramme/Sequenzdiagramme](https://docs.google.com/spreadsheets/d/1ZSPXvMbbACY-XNdplNhNhYPcBcWHUS9d6ika1TpZjXg/edit?usp=sharing)
 
 ---
 
