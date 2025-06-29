@@ -1,5 +1,18 @@
 # Projekt: Autovermietung – IT-Projektmanagement
 
+Einleitung
+
+Dieses Repository befasst sich mit der Entwicklung eines Teil der Webseite Autovermietung. Das Team Alpha liefert folgede features des Mietvorgangs Durchführung:
+
+Anmeld- und Regestrierung System
+Auto reservieren
+Rückgabe Auto
+Rechnung erstellen
+Mahnwesen
+
+
+
+
 ## Dokumentation
 
 ### Auftrag & Planung
@@ -12,21 +25,22 @@
 -  [Logbuch](https://docs.google.com/document/d/15GF09IdG36DPjd5Ey-WlCfoReXItvEM57o2ZZX0Mteg/edit?tab=t.0)
 -  [Trello-Board](https://trello.com/b/CYIHeRmJ/projekt-winfo)
 -  [Notion](https://www.notion.so/1e34e604205c801d94f7c184fe4f0516?v=1e34e604205c80c5aea2000c2aa540ee&pvs=4)
--  [Risikomanagement](https://link-zu-onedrive-excel) !
+-  [Risikoanalyse](https://studmailwhsde-my.sharepoint.com/:x:/g/personal/christian_bovenkerk_studmail_w-hs_de/Ef4IGk3yBQ1AsfAwFbJBFIoBGsacE02Pet3x9OrwZ42Vlw?e=nMhZBb)
+-  [Risikobericht](https://docs.google.com/document/d/1aQ7xzmw-nVU49Y2d1ZLfgAWBjlHhHwL-N-RTNltqIIw/edit?usp=sharing)
 -  [Kostenreporting](https://docs.google.com/spreadsheets/d/15wFkdG4pU2KYF6CzObLUC2lXlmhkhckMKj3ChtuShh4/edit?usp=sharing)
 -  [Testfälle](https://link-zu-google-docs) !
-- [Dokumentation zur Nutzung von KI-Tools](https://link-zum-dokument) !
+- [Dokumentation zur Nutzung von KI-Tools](https://docs.google.com/document/d/1BlBkyYJo1Rm-une-ZAagnk6kbSxjRWtJBkPg1wGcEQk/edit?usp=sharing)
+- [PowerPoint](https://studmailwhsde-my.sharepoint.com/:p:/g/personal/christian_bovenkerk_studmail_w-hs_de/ESmR_gwzN6ZGj34TgTvTuNQBOStJU7Qnq3pe6cw3alRs1w?e=eL8NsG)
+
   
 
 ---
 
 ## Design & Planung
 
--  [Gantt-Diagramm](https://link-zu-google-sheets) !
--  [BPMN-Prozessmodell](https://signavio-link) !
+-  [Gantt-Diagramm](https://docs.google.com/spreadsheets/d/1A8mtONvlZpncYvhavonJjvMApBQZnYpaMX9P6lQrQKU/edit?usp=sharing) 
 -  [Mockups / UI-Design](https://claritee.io/...) !
--  [Sequenzdiagramme](https://github.com/dein-repo/diagrams) !
--  [Anwendungsfalldiagramme](https://signavio-link) !
+-  [Anwendungsfalldiagramme/Sequenzdiagramme](https://docs.google.com/spreadsheets/d/1ZSPXvMbbACY-XNdplNhNhYPcBcWHUS9d6ika1TpZjXg/edit?usp=sharing)
 
 ---
 
