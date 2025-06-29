@@ -31,7 +31,7 @@ Mahnwesen
 -  [Testfälle](https://link-zu-google-docs) !
 - [Dokumentation zur Nutzung von KI-Tools](https://docs.google.com/document/d/1BlBkyYJo1Rm-une-ZAagnk6kbSxjRWtJBkPg1wGcEQk/edit?usp=sharing)
 - [PowerPoint](https://studmailwhsde-my.sharepoint.com/:p:/g/personal/christian_bovenkerk_studmail_w-hs_de/ESmR_gwzN6ZGj34TgTvTuNQBOStJU7Qnq3pe6cw3alRs1w?e=eL8NsG)
-)
+
   
 
 ---
