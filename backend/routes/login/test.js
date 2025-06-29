@@ -9,7 +9,7 @@ async function test() {
         const password = 'pw1234';
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        connection.promise().query('update kunden set password = ? where emailAdresse = ?', [hashedPassword, email], (error, results) => {
+        await connection.promise().query('update kunden set password = ? where emailAdresse = ?', [hashedPassword, email], (error, results) => {
             if (error) {
                 console.error('Database update error:', error);
                 return;
@@ -32,7 +32,7 @@ async function test() {
             const isMatch = await bcrypt.compare(password, user.password);
             console.log('Password match:', isMatch ? 'Success' : 'Failure');
         });*/
-        
+        return true;
     } catch (error) {
         console.error('Error during test execution:', error);
     }

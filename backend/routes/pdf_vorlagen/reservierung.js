@@ -23,7 +23,7 @@ router.post("/bestaetigung", async (req, res) => {
         const [reservierung] = await connection.promise().execute(`
         INSERT INTO reservierungen (kundeID, kfzID, abholstationID, abgabestationID,
                                     mietbeginn, mietende, zusaetze, gesamtbetrag)VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        `, [kundeID, kfzID, abholStationID, abgabeStationID, von, bis, zusatz, gesamtbetrag]);
+        `, [kundeID, kfzID, abholStationID, abgabeStationID, von, bis, zusatz.toLowerCase(), gesamtbetrag]);
 
         const [kunden] = await connection.promise().execute(`
             SELECT * from kunden WHERE kundeID = ?
@@ -80,12 +80,14 @@ router.post("/bestaetigung", async (req, res) => {
         doc.fontSize(16).text("Reservierungsbestätigung", 50, doc.y, { align: "center", underline: true }).moveDown();
 
         // Kundendaten
-        doc.fontSize(11).text("Kunde:", { underline: true }).moveDown(0.2)
-                .text(`${kunde.vorname} ${kunde.nachname}`)
+        doc.fontSize(11).text("Kunde:", { underline: true }).moveDown(0.2);
+        if(kunde.vorname !== "" || kunde.vorname !== null){
+        doc.text(`${kunde.vorname} ${kunde.nachname}`)
                 .text(`${kunde.strasse} ${kunde.hausNr}`)
                 .text(`${kunde.plz} ${kunde.ort}`)
-                .text(kunde.land)
-                .moveDown(1.5);
+                .text(kunde.land);
+        }
+        doc.moveDown(1.5);
 
         doc.fontSize(11)
             .text(`Kundennummer: ${kundeID}`, 50, doc.y)
@@ -109,7 +111,6 @@ router.post("/bestaetigung", async (req, res) => {
         const table = [
             ["Fahrzeug:", `${fahrzeug.marke} ${fahrzeug.modell}`],
             ["Typ:", `${fahrzeug.typBezeichnung}, ${fahrzeug.getriebe}`],
-            ["Kilometerstand:", `${fahrzeug.kilometerStand} km`],
             ["Türen / Sitze:", `${fahrzeug.anzahlTueren} Türen, ${fahrzeug.anzahlSitze} Sitze`],
             ["Preiskategorie:", fahrzeug.kategorieBezeichnung],
             ["Mietdauer:", `${tage} Tage`],

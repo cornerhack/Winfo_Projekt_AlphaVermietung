@@ -23,7 +23,8 @@ export async function getStation(id){
     }
 
     const station = rows[0];
-    return `${station.strasse} ${station.hausNr}, ${station.plz} ${station.ort}, ${station.land}`
+    const adresse = `${station.strasse} ${station.hausNr}, ${station.plz} ${station.ort}, ${station.land}`;
+    return adresse;
   } catch (error) {
     console.error('Fehler beim Abrufen der Station:', error);
     return null;
@@ -37,10 +38,11 @@ router.get('/stationen', async (req, res) => {
     const [rows] = await connection.promise().execute(
       `SELECT mietstationID, ort, plz, strasse, hausNr, land
        FROM mietstationen
-       WHERE ort LIKE ? 
-       ORDER BY ort ASC
+       WHERE ort LIKE ?
+          OR plz like ?
+       ORDER BY ort
        LIMIT 3`,
-      [`%${query}%`]
+      [`${query}%`, `${query}%`]
     );
 
     // Optional: Name für Frontend zusammenbauen
@@ -96,24 +98,86 @@ router.get('/fahrzeug', async (req, res) => {
   const kfzID = req.query.kfzID;
 
   try {
-    const [rows] = await connection.promise().execute(
-      `SELECT * FROM kfz 
-      JOIN kfztypen t ON kfz.kfzTypID = t.kfzTypID
-      JOIN kfzPreisKategorie p ON kfz.kfzPreisKategorieID = p.kfzPreisKategorieID
-      JOIN tarife ta ON t.tarifID = ta.tarifID
-      WHERE kfzID = ?`,
-      [kfzID]
-    );
+    const fahrzeug = await getFahrzeug(kfzID);
 
-    if (rows.length === 0) {
+    if (!fahrzeug) {
       return res.status(404).json({ error: 'Fahrzeug nicht gefunden' });
     }
 
-    res.json(rows[0]);
+    res.json(fahrzeug);
   } catch (error) {
     console.error('Fehler beim Abrufen des Fahrzeugs:', error);
     res.status(500).json({ error: 'Serverfehler' });
   }
+});
+
+router.get('/bessereFahrzeuge', async (req, res) => {
+  const { kfzID } = req.query;
+  const fahrzeug = await getFahrzeug(kfzID);
+  let [autos] = await connection.promise().query(`
+      SELECT k.*, t.typBezeichnung FROM kfz k
+               JOIN kfztypen t on k.kfzTypID = t.kfzTypID
+               WHERE k.getriebe = ? AND k.anzahlSitze >= ? AND k.anzahlTueren >= ? AND k.kfzTypID = ? 
+                                    AND k.kfzPreisKategorieID >= ? AND k.standortMietstationID = ?
+                                    AND k.kfzID != ?
+  `, [fahrzeug.getriebe, fahrzeug.anzahlSitze, fahrzeug.anzahlTueren, fahrzeug.kfzTypID,
+    fahrzeug.kfzPreisKategorieID, fahrzeug.standortMietstationID, fahrzeug.kfzID]);
+
+  if(autos.length === 0)
+    [autos] = await connection.promise().query(`
+            SELECT k.*, t.typBezeichnung FROM kfz k JOIN kfztypen t on K.kfzTypID = t.kfzTypID
+                WHERE k.kfzTypID = ? AND k.kfzPreisKategorieID >= ? AND k.standortMietstationID = ?
+                  AND k.kfzID != ? `, [fahrzeug.kfzTypID, fahrzeug.kfzPreisKategorieID, fahrzeug.standortMietstationID, fahrzeug.kfzID]);
+  if(autos.length === 0)
+    [autos] = await connection.promise().query(`
+            SELECT k.*, t.typBezeichnung FROM kfz k JOIN kfztypen t on K.kfzTypID = t.kfzTypID
+                WHERE k.kfzTypID = ? AND k.standortMietstationID = ?
+                  AND k.kfzID != ? `, [fahrzeug.kfzTypID, fahrzeug.standortMietstationID, fahrzeug.kfzID]);
+  if(autos.length === 0)
+    [autos] = await connection.promise().query(`
+            SELECT k.*, t.typBezeichnung FROM kfz k JOIN kfztypen t on K.kfzTypID = t.kfzTypID
+                WHERE k.standortMietstationID = ? AND k.kfzID != ? `,
+            [fahrzeug.standortMietstationID, fahrzeug.kfzID]);
+  res.json(autos);
+});
+
+async function getFahrzeug(kfzID) {
+  try {
+    const [rows] = await connection.promise().execute(
+        `SELECT * FROM kfz 
+      JOIN kfztypen t ON kfz.kfzTypID = t.kfzTypID
+      JOIN kfzPreisKategorie p ON kfz.kfzPreisKategorieID = p.kfzPreisKategorieID
+      JOIN tarife ta ON t.tarifID = ta.tarifID
+      WHERE kfzID = ?`,
+        [kfzID]
+    );
+
+    if (rows.length === 0) {
+      return null; // Fahrzeug nicht gefunden
+    }
+
+    return rows[0]; // Erfolg
+  } catch (err) {
+    throw err; // Fehler weiterreichen
+  }
+}
+
+router.get('/alleReservierungen', async (req, res) => {
+  const [results] = await connection.promise().query(`
+    SELECT r.*, 
+           k.marke, 
+           k.modell,
+           k.getriebe,
+           k.kilometerStand,
+           ku.vorname,
+           ku.nachname,
+           t.typBezeichnung
+    FROM reservierungen r
+    JOIN kfz k ON r.kfzID = k.kfzID
+    JOIN kunden ku ON r.kundeID = ku.kundeID
+    JOIN kfztypen t ON k.kfzTypID = t.kfzTypID
+    ORDER BY r.mietbeginn`);
+  res.json(results);
 });
 
 router.get('/meineReservierungen', async (req, res) => {
@@ -132,7 +196,7 @@ router.get('/meineReservierungen', async (req, res) => {
     JOIN mietstationen abhol ON r.abholstationID = abhol.mietstationID
     JOIN mietstationen abgabe ON r.abgabestationID = abgabe.mietstationID
     WHERE r.kundeID = ?
-    ORDER BY r.mietbeginn DESC
+    ORDER BY r.mietbeginn ASC
   `, [kundeID]);
 
   res.json(results);
@@ -167,4 +231,30 @@ router.put('/reservierungen/:id', async (req, res) => {
   await connection.promise().query('UPDATE reservierungen SET zusaetze = ?, gesamtbetrag = ? WHERE reservierungID = ?', [zusaetze, gesamtbetrag, req.params.id]);
   res.sendStatus(200);
 });
+
+router.put('/reservierungen/autoWechseln/:id', async (req, res) =>{
+  const { kfzID } = req.body;
+  await connection.promise().query('UPDATE reservierungen SET kfzID = ? WHERE reservierungID = ?', [kfzID, req.params.id]);
+  res.sendStatus(200);
+});
+
+router.get('/kunde/:id', async (req, res) => {
+  const [rows] = await connection.promise().query('SELECT * FROM kunden WHERE kundeID = ?', [req.params.id]);
+  res.json(rows[0]);
+});
+
+router.put('/updateKundeReservierung/:id', async (req, res) => {
+  const { vorname, nachname, mail, str, nr, plz, ort, land, tel } = req.body;
+
+  await connection.promise().query(
+      `UPDATE kunden
+       SET vorname = ?, nachname = ?, emailAdresse = ?,
+           strasse = ?, hausNr = ?, plz = ?, ort = ?, land = ?, telefonNr = ?
+       WHERE kundeID = ?`,
+      [vorname, nachname, mail, str, nr, plz, ort, land, tel, req.params.id]
+  );
+
+  res.json({ success: true, message: 'Kundendaten aktualisiert' });
+});
+
 export default router;

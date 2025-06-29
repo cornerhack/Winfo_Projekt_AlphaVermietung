@@ -1,0 +1,106 @@
+.modal, .modalKunde, .modalRueck{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal-content{
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 1200px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.modalKunde-content, .modalRueck-content{
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.modal-content label, .modalKunde-content label, .modalRueck-content label {
+    display: block;
+}
+
+.close-btn, .closeIdent-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.modalKunde-content input[type="text"],
+.modalKunde-content input[type="email"],
+.modalKunde-content input[type="number"],
+.modalRueck-content input[type="text"]{
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 2px solid #bdbbbb;
+    width: 100%;
+    border-radius: 4px;
+}
+
+#abschliessenBtn {
+    margin-top: 1rem;
+    padding: 0.7rem 1.5rem;
+    font-weight: bold;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.form-row label {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+#kosten-row label {
+    display: flow;
+}
+
+.checkbox-row {
+    justify-content: flex-start;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.radio-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.radio-label {
+    min-width: 0 !important;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}

@@ -35,8 +35,7 @@ router.post("/sendmail", async (req, res) => {
   };
 
   try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log("E-Mail gesendet:", info.messageId);
+    await transporter.sendMail(mailOptions);
     res.status(200).json({ message: "E-Mail erfolgreich gesendet" });
   } catch (error) {
     console.error("Fehler beim Senden:", error);
@@ -65,8 +64,53 @@ export async function reservierungSchicken(name, email, id){
   };
 
   try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log("E-Mail gesendet:", info.messageId);
+    await transporter.sendMail(mailOptions);
+    return true;
+  } catch (error) {
+    console.error("Fehler beim Senden:", error);
+    return false;
+  }
+}
+
+export async function mietvertragSchicken(name, email, id){
+  const pdfPath = path.join(__dirname, "../../pdfs/mietvertraege", `mietvertrag-${id}.pdf`);
+  const mailOptions = {
+    from: '"AutoMieten24" <autovermietungalpha@gmail.com>',
+    to: email,
+    subject: `Ihr Mietvertrag`,
+    text: `Hallo ${name}, \n\nim Anhang finden Sie Ihren Mietvertrag.\n\nWir wünschen eine schöne Fahrt!\nIhr Team von Autovermietung Alpha`,
+    attachments: [
+      {
+        filename: `mietvertrag-${id}.pdf`,
+        path: pdfPath,
+      },
+    ],
+  };
+  try {
+    await transporter.sendMail(mailOptions);
+    return true;
+  } catch (error) {
+    console.error("Fehler beim Senden:", error);
+    return false;
+  }
+}
+
+export async function rechnungSchicken(name, email, id){
+  const pdfPath = path.join(__dirname, "../../pdfs/rechnungen", `rechnung-${id}.pdf`);
+  const mailOptions = {
+    from: '"AutoMieten24" <autovermietungalpha@gmail.com>',
+    to: email,
+    subject: `Ihre Rechnung`,
+    text: `Hallo ${name}, \n\nim Anhang finden Sie Ihre Rechnung.\n\nWir hoffen Sie bald wieder begrüßen zu können!\nIhr Team von Autovermietung Alpha`,
+    attachments: [
+      {
+        filename: `rechnung-${id}.pdf`,
+        path: pdfPath,
+      },
+    ],
+  };
+  try {
+    await transporter.sendMail(mailOptions);
     return true;
   } catch (error) {
     console.error("Fehler beim Senden:", error);
@@ -81,7 +125,7 @@ router.post('/newPassword', async (req, res) => {
 
     const mailOptions = {
       from: '"AutoMieten24" <autovermietungalpha@gmail.com>',
-      to: "royahmad1096@gmail.com",
+      to: "email",
       subject: "Passwort zurücksetzen",
       text: `${resetUrl}`,
       html: `

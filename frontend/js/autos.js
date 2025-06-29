@@ -147,7 +147,7 @@ async function ladeVerfuegbareAutos() {
 
       card.innerHTML = `
         <div class="header">${auto.marke} ${auto.modell}</div>
-        <div class="subtitle">${auto.typBezeichnung} ${auto.getriebe}</div>
+        <div class="subtitle">${auto.typBezeichnung}</div>
 
         <div class="info-row">
           <div class="hidden">${auto.kfzID}</div>

@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 import connection from "../../db.js";
 import { PassThrough } from "stream";
 import { zusaetzeBetrag } from "../../berechnungen/calculate.js";
+import {rechnungSchicken} from "../mailer/mailverteiler.js";
 
 const router = express.Router();
 
@@ -23,17 +24,19 @@ router.post("/rechnung", async (req, res) => {
   try {
     const [rows] = await connection.promise().execute(
       `
-      SELECT r.rechnungNr, r.mietvertragID, r.kundeID, r.ruecknahmeprotokollID, DATE_FORMAT(r.rechnungDatum, '%Y-%m-%d') AS rechnungDatum,
-            r.rechnungBetrag, DATE_FORMAT(r.zahlungslimit, '%Y-%m-%d') AS zahlungslimit,
+      SELECT r.rechnungNr, k.kundeID, r.ruecknahmeprotokollID, DATE_FORMAT(r.rechnungDatum, '%Y-%m-%d') AS rechnungDatum,
+            res.gesamtbetrag, DATE_FORMAT(r.zahlungslimit, '%Y-%m-%d') AS zahlungslimit,
              k.vorname, k.nachname, k.unternehmen, k.strasse, k.hausNr, k.plz, k.ort, k.land, k.emailAdresse,
-             m.reservierungID, m.mietdauerTage, m.mietgebuehr, DATE_FORMAT(m.datum, '%Y-%m-%d') AS mietbeginn,
-             round(p.tank,1) as tank, p.schadenTarifID, s.tarifBez, s.tarifPreis, res.zusaetze
+             m.reservierungID, DATE_FORMAT(res.mietbeginn, '%Y-%m-%d') AS mietbeginn,
+             DATE_FORMAT(res.mietende, '%Y-%m-%d') AS mietende,
+             round(p.tank,1) as tank, s.tarifBez, s.tarifPreis, res.zusaetze
       FROM rechnungen r
-      JOIN kunden k ON r.kundeID = k.kundeID
-      JOIN mietvertraege m ON r.mietvertragID = m.mietvertragID
-      LEFT JOIN ruecknahmeprotokolle p ON r.ruecknahmeprotokollID = p.ruecknahmeprotokollID
+        JOIN ruecknahmeprotokolle p ON r.ruecknahmeprotokollID = p.ruecknahmeprotokollID
+        JOIN mietvertraege m ON p.mietvertragID = m.mietvertragID
+        JOIN reservierungen res ON m.reservierungID = res.reservierungID
+          JOIN kunden k ON res.kundeID = k.kundeID
       LEFT JOIN tarife s ON p.schadenTarifID = s.tarifID
-      LEFT JOIN reservierungen res ON m.reservierungID = res.reservierungID
+      join kfz on res.kfzID = kfz.kfzID
       WHERE r.rechnungNr = ?
       `,
       [rechnungNr]
@@ -44,6 +47,7 @@ router.post("/rechnung", async (req, res) => {
     }
 
     const data = rows[0];
+    const tage = Math.max(1, Math.ceil((new Date(data.mietende) - new Date(data.mietende)) / (1000 * 60 * 60 * 24)));
     const zusatzBetrag = await zusaetzeBetrag(data.reservierungID);
     const zusatz = data.zusaetze || "Keine";
     let tankGebuehr = Math.round(((1 - data.tank) * 150),2);
@@ -51,7 +55,7 @@ router.post("/rechnung", async (req, res) => {
       tankGebuehr = 0; // Keine Kosten für nicht vollen Tank
     }
     let schadenkosten = data.tarifPreis;
-    if(zusatz.includes("versicherung")) {
+    if(zusatz.includes("vollkaskoversicherung")) {
       schadenkosten = 0; // Keine Kosten für Schaden wegen Versicherung
     }
     
@@ -117,7 +121,7 @@ router.post("/rechnung", async (req, res) => {
     doc
     .fontSize(11)
     .text(`Kundennummer: ${data.kundeID}`, 50, doc.y)
-    .text(`Rechnungsnummer: ${data.rechnungNr}`, 50, doc.y)
+    .text(`Rechnungsnummer: ${rechnungNr}`, 50, doc.y)
     .text(`Rechnungsdatum: ${dayjs(data.rechnungDatum).format("DD.MM.YYYY")}`, 50)
     .text(`Zahlbar bis: ${dayjs(data.zahlungslimit).format("DD.MM.YYYY")}`, 50);
 
@@ -129,11 +133,11 @@ router.post("/rechnung", async (req, res) => {
     const labelX = 60;
     const valueX = 300;
     let y = doc.y; 
-
+    const mietgebuehr = data.gesamtbetrag - tankGebuehr - data.tarifPreis - zusatzBetrag;
     const table = [
       ["Mietbeginn:", dayjs(data.mietbeginn).format("DD.MM.YYYY")],
-      ["Mietdauer:", `${data.mietdauerTage} Tage`],
-      ["Mietgebühr:", `${data.mietgebuehr.toFixed(2)} €`],
+      ["Mietdauer:", `${tage} Tage`],
+      ["Mietgebühr:", `${mietgebuehr.toFixed(2)} €`],
       ["Zusatzleistungen:", zusatz],
       ["Zusatzkosten:", `${zusatzBetrag.toFixed(2)} €`],
       ["Tankauffüllung:", `${tankGebuehr.toFixed(2)} €`],
@@ -152,7 +156,7 @@ router.post("/rechnung", async (req, res) => {
     doc
       .font("Helvetica-Bold")
       .text("Gesamtbetrag:", labelX)
-      .text(`${data.rechnungBetrag.toFixed(2)} €`, labelX)
+      .text(`${data.gesamtbetrag.toFixed(2)} €`, labelX)
       .font("Helvetica");
 
     doc.moveDown().moveTo(50, doc.y).lineTo(550, doc.y).strokeColor('#cccccc').stroke();
@@ -172,7 +176,12 @@ router.post("/rechnung", async (req, res) => {
     .fontSize(10)
     .text("Vielen Dank für Ihre Buchung!", { align: "center" });
 
-    doc.end();
+    await new Promise((resolve) => {
+      writeStream.on("finish", resolve);
+      doc.end();
+    });
+    await rechnungSchicken(k.vorname, k.emailAdresse, k.kundeID);
+    res.json({rechnungNr});
   } catch (err) {
     console.error("Fehler beim Erstellen der PDF:", err);
     res.status(500).json({ error: "PDF-Erstellung fehlgeschlagen" });

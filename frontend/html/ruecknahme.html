@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Meine Reservierungen</title>
+    <link rel="stylesheet" href="../css/startseite.css" />
+    <link rel="stylesheet" href="../css/universal.css" />
+    <link rel="stylesheet" href="../css/reservierungen.css" />
+    <link rel="stylesheet" href="../css/modal.css" />
+    <link rel="stylesheet" href="../css/abholung.css" />
+    <link rel="stylesheet" href="../css/headerLogin.css" />
+    <link rel="stylesheet" href="../css/auswahl.css">
+</head>
+<body>
+<div id="header-placeholder"></div>
+<main class="reservierungen-container">
+    <h1>Vorhandene Reservierungen</h1>
+    <div id="reservierungen-list" class="reservierungen-list">
+        <!-- Reservierungen werden hier per JavaScript eingefügt -->
+    </div>
+</main>
+
+<div id="ruecknahmeForm-modal" class="modalRueck" style="display: none;">
+    <div class="modalRueck-content">
+        <span class="closeIdent-btn">&times;</span>
+        <h2>Fahrzeugdaten überprüfen und zusätzliche Kosten ermitteln</h2>
+        <form id="rueck-form">
+            <div class="form-row">
+                <label>
+                    Kilometerstand:
+                    <input type="text" id="kmStand" name="kmStand" min="0" step="1" required inputmode="numeric" pattern="^[0-9]+$" placeholder="Nur ganze Zahlen erlaubt"/>
+                </label>
+                <label>
+                    Tankfüllung:
+                    <input type="text" id="tank" name="tank" pattern="^(0([.][0-9])?|1([.]0)?)$"  placeholder="Nur Werte von 0 bis 1 erlaubt" inputmode="decimal" required>
+                    <span id="bewertungFehler" style="color: red; display: none;">Ungültiger Wert</span>
+                </label>
+            </div>
+
+            <div class="form-row radio-row">
+                <span>Schadenstatus:</span>
+                <label class="radio-label">
+                    <input type="radio" name="schaden" value="kein"> Kein Schaden
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="schaden" value="leicht"> Leichter Schaden
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="schaden" value="stark"> Starker Schaden
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="schaden" value="total"> Totalschaden
+                </label>
+            </div>
+
+            <div class="form-row radio-row">
+                <span>Sauberkeit:</span>
+                <label class="radio-label">
+                    <input type="radio" name="sauberkeit" value="sehr-schmutzig"> Sehr schmutzig
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="sauberkeit" value="leicht-schmutzig"> Leicht schmutzig
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="sauberkeit" value="neutral"> Neutral
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="sauberkeit" value="sauber"> Sauber
+                </label>
+            </div>
+
+            <div class="form-row" id="kosten-row">
+                <label>
+                    Zusätzliche Kosten: <span id="zusaetzlicheKosten">0,00</span> €
+                </label>
+            </div>
+
+            <div class="form-row">
+                <button type="button" id="abschliessenBtn" disabled>Abholung abschließen</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script src="../js/header.js"></script>
+<script src="../js/auth.js" type="module"></script>
+<script src="../js/ruecknahme.js" type="module"></script>
+<script src="../js/mitarbeiterCheck.js"></script>
+</body>
+</html>

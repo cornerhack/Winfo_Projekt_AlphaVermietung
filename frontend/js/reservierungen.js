@@ -30,11 +30,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     function filterReservierungen(status) {
-        console.log("hier");
         const cards = document.querySelectorAll('.reservierungs-card');
-        console.log(cards);
         cards.forEach(card => {
-            console.log(card.dataset.status , status);
             if (status === 'alle' || card.dataset.status === status) {
                 card.style.display = '';
             } else {
