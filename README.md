@@ -1,5 +1,18 @@
 # Projekt: Autovermietung – IT-Projektmanagement
 
+Einleitung
+
+Dieses Repository befasst sich mit der Entwicklung eines Teil der Webseite Autovermietung. Das Team Alpha liefert folgede features des Mietvorgangs Durchführung:
+
+Anmeld- und Regestrierung System
+Auto reservieren
+Rückgabe Auto
+Rechnung erstellen
+Mahnwesen
+
+
+
+
 ## Dokumentation
 
 ### Auftrag & Planung
