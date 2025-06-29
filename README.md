@@ -46,11 +46,15 @@ Mahnwesen
 
 ## Webanwendung
 
--  [Live-Demo der Web-App](https://dein-hosting-link.de) !
 - Zugangsdaten zur Anwendung:
-  - **User:** `User` / **Passwort:** `User`
-  - **User:** `User2` / **Passwort:** `User2`
-  - **Admin:** `Admin` / **Passwort:** `Admin`
+  - Mitarbeiter **email:** `lena.schneider@firma.de` / **Passwort:** `passwort123`
+  - Kunde **User:** `anna.schmidt@email.de` / **Passwort:** `pw1234`
+
+ Als erstes implementiert man die autovermietung_mit_testdaten.sql in einer Datenbank nach Wahl. Bei diesem Projekt wurde MySQL mit Hilfe von MySQL Workbench benutzt.
+ Um den Server zu starten muss man in das Terminal mit dem Befehl "cd" im richtigen Pfad gehen: das Ende sollte der Pfad so aussehen: .../Winfo_Projekt_AlphaVermietung/backend/
+ Da die Nutzer in der Datenbank nicht gehashed sind und das Passwort nicht übereinstimmt, muss man in der test.js Datei die Daten angeben und die nutzer hashen. Dabei muss man beachten, ob es ein Kunde oder Mitarbeiter ist.
+ Die test.js öffnet man über node /routes/login/test.js wenn man im oben genannten Ordner ist.
+ Den server startet man über node server.js und dann kann man im Browser über localhost:3000 auf den Server zugreifen.
 
 ---
 
