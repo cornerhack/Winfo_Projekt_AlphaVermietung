@@ -25,7 +25,7 @@ Mahnwesen
 -  [Logbuch](https://docs.google.com/document/d/15GF09IdG36DPjd5Ey-WlCfoReXItvEM57o2ZZX0Mteg/edit?tab=t.0)
 -  [Trello-Board](https://trello.com/b/CYIHeRmJ/projekt-winfo)
 -  [Notion](https://www.notion.so/1e34e604205c801d94f7c184fe4f0516?v=1e34e604205c80c5aea2000c2aa540ee&pvs=4)
--  [Risikomanagement](https://link-zu-onedrive-excel) !
+-  [Risikomanagement](https://studmailwhsde-my.sharepoint.com/:x:/g/personal/christian_bovenkerk_studmail_w-hs_de/Ef4IGk3yBQ1AsfAwFbJBFIoBGsacE02Pet3x9OrwZ42Vlw?e=nMhZBb) 
 -  [Kostenreporting](https://docs.google.com/spreadsheets/d/15wFkdG4pU2KYF6CzObLUC2lXlmhkhckMKj3ChtuShh4/edit?usp=sharing)
 -  [Testfälle](https://link-zu-google-docs) !
 - [Dokumentation zur Nutzung von KI-Tools](https://docs.google.com/document/d/1BlBkyYJo1Rm-une-ZAagnk6kbSxjRWtJBkPg1wGcEQk/edit?usp=sharing) 
