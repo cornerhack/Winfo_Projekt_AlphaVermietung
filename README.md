@@ -29,7 +29,9 @@ Mahnwesen
 -  [Risikobericht](https://docs.google.com/document/d/1aQ7xzmw-nVU49Y2d1ZLfgAWBjlHhHwL-N-RTNltqIIw/edit?usp=sharing)
 -  [Kostenreporting](https://docs.google.com/spreadsheets/d/15wFkdG4pU2KYF6CzObLUC2lXlmhkhckMKj3ChtuShh4/edit?usp=sharing)
 -  [Testfälle](https://link-zu-google-docs) !
-- [Dokumentation zur Nutzung von KI-Tools](https://docs.google.com/document/d/1BlBkyYJo1Rm-une-ZAagnk6kbSxjRWtJBkPg1wGcEQk/edit?usp=sharing) 
+- [Dokumentation zur Nutzung von KI-Tools](https://docs.google.com/document/d/1BlBkyYJo1Rm-une-ZAagnk6kbSxjRWtJBkPg1wGcEQk/edit?usp=sharing)
+- [PowerPoint](https://studmailwhsde-my.sharepoint.com/:p:/g/personal/christian_bovenkerk_studmail_w-hs_de/ESmR_gwzN6ZGj34TgTvTuNQBOStJU7Qnq3pe6cw3alRs1w?e=eL8NsG)
+)
   
 
 ---
