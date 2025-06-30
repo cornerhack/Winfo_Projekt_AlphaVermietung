@@ -17,7 +17,7 @@ Mahnwesen
 
 ### Auftrag & Planung
 
-- 📎 [Projektauftrag (PDF)](https://github.com/dein-repo/pfad-zum-dokument) !
+
 
 
 ### Protokolle & Management
@@ -39,7 +39,6 @@ Mahnwesen
 ## Design & Planung
 
 -  [Gantt-Diagramm](https://docs.google.com/spreadsheets/d/1A8mtONvlZpncYvhavonJjvMApBQZnYpaMX9P6lQrQKU/edit?usp=sharing) 
--  [Mockups / UI-Design](https://claritee.io/...) !
 -  [Anwendungsfalldiagramme/Sequenzdiagramme](https://docs.google.com/spreadsheets/d/1ZSPXvMbbACY-XNdplNhNhYPcBcWHUS9d6ika1TpZjXg/edit?usp=sharing)
 
 ---
